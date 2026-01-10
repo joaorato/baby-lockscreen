@@ -121,43 +121,78 @@ export async function GET(req: Request) {
     (
       <div
         style={{
-          width: 500,
-          height: 500, // square widget
+          width: "100%",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "transparent",
+          background: "linear-gradient(180deg, #FFF7ED, #FFE4E6)",
           fontFamily: "system-ui, -apple-system",
-          padding: 20,
-          textAlign: "center",
+          padding: 80,
         }}
       >
-        {/* Week / Day */}
-        <div style={{ fontSize: 40, fontWeight: 600, marginBottom: 40, opacity: 0.5 }}>
-          {`Week ${clampedWeek} · Day ${dayInWeek + 1}`}
+        {/* Top */}
+        <div
+          style={{
+            fontSize: 48,
+            opacity: 0.7,
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+          }}
+        >
+          <div>{`Week ${clampedWeek} · Day ${dayInWeek + 1}`}</div>
         </div>
 
-        <div style={{ fontSize: 32, fontWeight: 600 }}>
-          {`${babyLabel} size is about a`}
+        {/* Center */}
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={fruit.imageUrl}
+            width={500}
+            height={500}
+            style={{ marginBottom: 40 }}
+          />
+
+          <div style={{ fontSize: 56, fontWeight: 600, textAlign: "center" }}>
+            {`${babyLabel} size is about a`}
+          </div>
+
+          <div style={{ fontSize: 72, fontWeight: 700, marginTop: 10 }}>
+            {fruit.name}
+          </div>
         </div>
 
-        {/* Fruit Image */}
-        <img
-          src={fruit.imageUrl}
-          width={150} // smaller for widget
-          height={150}
-          style={{ marginTop: 20 }}
-        />
+        {/* Bottom */}
+        <div
+          style={{
+            fontSize: 40,
+            textAlign: "center",
+            opacity: 0.8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div>{message}</div>
 
-        <div style={{ fontSize: 36, fontWeight: 700, marginTop: 5 }}>
-          {fruit.name}
+          {from && (
+            <div style={{ marginTop: 20, fontSize: 32, opacity: 0.6 }}>
+              {`— ${from}`}
+            </div>
+          )}
         </div>
       </div>
     ),
     {
-      width: 500,
-      height: 500,
+      width,
+      height,
     }
   );
 }
