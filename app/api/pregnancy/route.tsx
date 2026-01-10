@@ -70,15 +70,30 @@ const DAILY_MESSAGES = [
   "A quiet day of development 💛",
 ];
 
-const FRUIT_CACHE = new Map<string, ArrayBuffer>();
+type LoadedImage = {
+  data: ArrayBuffer;
+  type: string;
+};
 
-async function loadImage(path: string) {
+const FRUIT_CACHE = new Map<string, LoadedImage>();
+
+async function loadImage(path: string): Promise<LoadedImage> {
   if (FRUIT_CACHE.has(path)) return FRUIT_CACHE.get(path)!;
 
   const res = await fetch(`${BASE_URL}${path}`);
-  const buffer = await res.arrayBuffer();
-  FRUIT_CACHE.set(path, buffer);
-  return buffer;
+
+  const arrayBuffer = await res.arrayBuffer();
+
+  // Infer type from file extension
+  const ext = path.split(".").pop()?.toLowerCase();
+  let type = "image/png";
+  if (ext === "jpg" || ext === "jpeg") type = "image/jpeg";
+  if (ext === "webp") type = "image/webp";
+
+  const img = { data: arrayBuffer, type };
+  FRUIT_CACHE.set(path, img);
+
+  return img;
 }
 
 /**
@@ -137,6 +152,12 @@ export async function GET(req: Request) {
   const fruit = getFruitForWeek(clampedWeek);
   const fruitImage = await loadImage(`/fruits/${fruit.image}`);
 
+  // Convert ArrayBuffer to base64 data URL
+  const uint8Array = new Uint8Array(fruitImage.data);
+  const binaryString = String.fromCharCode.apply(null, Array.from(uint8Array));
+  const base64 = btoa(binaryString);
+  const fruitImageUrl = `data:${fruitImage.type};base64,${base64}`;
+
   return new ImageResponse(
     (
       <div
@@ -174,7 +195,7 @@ export async function GET(req: Request) {
           }}
         >
           <img
-            src={fruitImage as any}
+            src={fruitImageUrl}
             width={500}
             height={500}
             style={{ marginBottom: 40 }}
