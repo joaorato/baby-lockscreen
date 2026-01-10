@@ -110,15 +110,15 @@ function possessive(name: string) {
   return `${name}'s`;
 }
 
-function getMessageForWeek(week: number) {
+function getMessageForWeek(week: number, elapsedDays: number) {
   if (week >= 0 && week <= 13) {
-    const idx = week % FIRST_TRIMESTER_MESSAGES.length;
+    const idx = elapsedDays % FIRST_TRIMESTER_MESSAGES.length;
     return FIRST_TRIMESTER_MESSAGES[idx];
   } else if (week >= 14 && week <= 27) {
-    const idx = week % SECOND_TRIMESTER_MESSAGES.length;
+    const idx = elapsedDays % SECOND_TRIMESTER_MESSAGES.length;
     return SECOND_TRIMESTER_MESSAGES[idx];
   } else if (week >= 28 && week <= 40) {
-    const idx = week % THIRD_TRIMESTER_MESSAGES.length;
+    const idx = elapsedDays % THIRD_TRIMESTER_MESSAGES.length;
     return THIRD_TRIMESTER_MESSAGES[idx];
   } else {
     return "Your baby is growing beautifully! 🌸";
@@ -155,7 +155,7 @@ export async function GET(req: Request) {
   const clampedWeek = Math.min(Math.max(week, 0), 40);
   const dayInWeek = elapsedDays % 7;
 
-  const message = getMessageForWeek(clampedWeek);
+  const message = getMessageForWeek(clampedWeek, elapsedDays);
   const fruit = getFruitForWeek(clampedWeek);
 
   return new ImageResponse(
