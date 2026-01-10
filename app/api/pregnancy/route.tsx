@@ -52,14 +52,40 @@ const FRUIT_BY_WEEK: Record<number, { name: string; imageUrl: string }> = {
   40: { name: "Watermelon", imageUrl: "https://res.cloudinary.com/ds5mpgwi1/image/upload/v1768078407/watermelon_wlzehm.png" },
 };
 
-const DAILY_MESSAGES = [
+const FIRST_TRIMESTER_MESSAGES = [
   "Your baby is growing tiny fingers and toes 👶",
   "Your baby is practicing little movements 💫",
   "A big development day today 🧠",
+  "Mom is amazing! Keep it up! 💖",
+  "Your baby’s heart is beating strong 💓",
+  "Tiny arms and legs are starting to form 🦵🖐️",
+  "Mom is amazing — your body is creating life! 💛",
+  "Your baby is practicing little movements 💫",
+  "Cells are multiplying at lightning speed ⚡",
+];
+
+const SECOND_TRIMESTER_MESSAGES = [
   "Your baby is getting stronger 💪",
   "So much growth happening right now 🌱",
   "Your baby is floating peacefully today 🌊",
-  "A quiet day of development 💛",
+  "Mom is amazing! You're doing great! 🌟",
+  "Your baby is starting to hear sounds 🎵",
+  "Little kicks are happening — can you feel them? 🦵",
+  "Your baby’s facial features are becoming more distinct 🙂",
+  "Mom is amazing — nurturing a growing little human! 🌱",
+  "Tiny fingers and toes are developing 👶",
+];
+
+const THIRD_TRIMESTER_MESSAGES = [
+  "Almost there! Your baby is growing rapidly 🚀",
+  "Getting ready for the big day! 🎉",
+  "Your baby is developing lungs and brain 🧠",
+  "Mom is amazing! Keep shining! ✨",
+  "Your baby’s lungs are getting stronger 🫁",
+  "The baby is practicing breathing movements 🌬️",
+  "Mom is amazing — almost time to meet your little one! 💛",
+  "Your baby is dreaming in utero 🌙",
+  "Your baby is getting ready for the big world 🌎",
 ];
 
 /**
@@ -82,6 +108,21 @@ function getFruitForWeek(week: number) {
 function possessive(name: string) {
   if (name.toLowerCase().endsWith("s")) return `${name}'`;
   return `${name}'s`;
+}
+
+function getMessageForWeek(week: number) {
+  if (week >= 0 && week <= 13) {
+    const idx = week % FIRST_TRIMESTER_MESSAGES.length;
+    return FIRST_TRIMESTER_MESSAGES[idx];
+  } else if (week >= 14 && week <= 27) {
+    const idx = week % SECOND_TRIMESTER_MESSAGES.length;
+    return SECOND_TRIMESTER_MESSAGES[idx];
+  } else if (week >= 28 && week <= 40) {
+    const idx = week % THIRD_TRIMESTER_MESSAGES.length;
+    return THIRD_TRIMESTER_MESSAGES[idx];
+  } else {
+    return "Your baby is growing beautifully! 🌸";
+  }
 }
 
 export async function GET(req: Request) {
@@ -114,7 +155,7 @@ export async function GET(req: Request) {
   const clampedWeek = Math.min(Math.max(week, 0), 40);
   const dayInWeek = elapsedDays % 7;
 
-  const message = DAILY_MESSAGES[dayInWeek % DAILY_MESSAGES.length];
+  const message = getMessageForWeek(clampedWeek);
   const fruit = getFruitForWeek(clampedWeek);
 
   return new ImageResponse(
