@@ -125,69 +125,90 @@ export async function GET(req: Request) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(180deg, #FFF7ED, #FFE4E6)",
+          justifyContent: "center",
+          alignItems: "center",
+          background: "radial-gradient(circle at center, #FFEBE9 0%, #edc7c9 50%, #d48970 90%)",
           fontFamily: "system-ui, -apple-system",
-          padding: 80,
+          padding: 60,
+          color: "#333",
         }}
       >
-        {/* Top */}
+        {/* Center Fruit + Text */}
         <div
           style={{
-            fontSize: 48,
-            opacity: 0.7,
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-          }}
-        >
-          <div>{`Week ${clampedWeek} · Day ${dayInWeek + 1}`}</div>
-        </div>
-
-        {/* Center */}
-        <div
-          style={{
-            flex: 1,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
             alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <img
-            src={fruit.imageUrl}
-            width={500}
-            height={500}
-            style={{ marginBottom: 40 }}
-          />
 
-          <div style={{ fontSize: 56, fontWeight: 600, textAlign: "center" }}>
+          <div
+            style={{
+              fontSize: 50,
+              fontWeight: 600,
+              textAlign: "center",
+              textShadow: "2px 2px 6px rgba(0,0,0,0.2)",
+              marginBottom: 30,
+            }}
+          >
             {`${babyLabel} size is about a`}
           </div>
+          
+          <img
+            src={fruit.imageUrl}
+            width={400}
+            height={400}
+            style={{ marginBottom: 20, borderRadius: 20 }}
+          />
 
-          <div style={{ fontSize: 72, fontWeight: 700, marginTop: 10 }}>
+          <div
+            style={{
+              fontSize: 64,
+              fontWeight: 700,
+              textAlign: "center",
+              textShadow: "2px 2px 8px rgba(0,0,0,0.25)",
+            }}
+          >
             {fruit.name}
+          </div>
+
+          {/* Week/Day below fruit name */}
+          <div
+            style={{
+              fontSize: 36,
+              opacity: 0.7,
+              marginTop: 30,
+              textAlign: "center",
+              textShadow: "1px 1px 4px rgba(0,0,0,0.2)",
+            }}
+          >
+            {`Week ${clampedWeek} · Day ${dayInWeek + 1}`}
           </div>
         </div>
 
-        {/* Bottom */}
-        <div
-          style={{
-            fontSize: 40,
-            textAlign: "center",
-            opacity: 0.8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div>{message}</div>
+        {/* Optional Bottom message */}
+        {from || message ? (
+          <div
+            style={{
+              fontSize: 32,
+              textAlign: "center",
+              opacity: 0.8,
+              marginTop: 100,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div>{message}</div>
 
-          {from && (
-            <div style={{ marginTop: 20, fontSize: 32, opacity: 0.6 }}>
-              {`— ${from}`}
-            </div>
-          )}
-        </div>
+            {from && (
+              <div style={{ marginTop: 20, fontSize: 28, opacity: 0.6 }}>
+                {`— ${from}`}
+              </div>
+            )}
+          </div>
+        ) : null}
       </div>
     ),
     {
