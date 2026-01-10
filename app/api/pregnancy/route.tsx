@@ -70,6 +70,17 @@ const DAILY_MESSAGES = [
   "A quiet day of development 💛",
 ];
 
+const FRUIT_CACHE = new Map<string, ArrayBuffer>();
+
+async function loadImage(path: string) {
+  if (FRUIT_CACHE.has(path)) return FRUIT_CACHE.get(path)!;
+
+  const res = await fetch(`${BASE_URL}${path}`);
+  const buffer = await res.arrayBuffer();
+  FRUIT_CACHE.set(path, buffer);
+  return buffer;
+}
+
 /**
  * Pick closest fruit for current week
  */
@@ -124,6 +135,7 @@ export async function GET(req: Request) {
 
   const message = DAILY_MESSAGES[dayInWeek % DAILY_MESSAGES.length];
   const fruit = getFruitForWeek(clampedWeek);
+  const fruitImage = await loadImage(`/fruits/${fruit.image}`);
 
   return new ImageResponse(
     (
@@ -162,7 +174,7 @@ export async function GET(req: Request) {
           }}
         >
           <img
-            src={`${BASE_URL}/fruits/${fruit.image}`}
+            src={fruitImage as any}
             width={500}
             height={500}
             style={{ marginBottom: 40 }}
