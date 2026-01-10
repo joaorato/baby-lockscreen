@@ -57,6 +57,16 @@ const FRUIT_BY_WEEK: Record<number, { name: string; image: string }> = {
   40: { name: "Watermelon", image: "watermelon.png" },
 };
 
+const DAILY_MESSAGES = [
+  "Your baby is growing tiny fingers and toes 👶",
+  "Your baby is practicing little movements 💫",
+  "A big development day today 🧠",
+  "Your baby is getting stronger 💪",
+  "So much growth happening right now 🌱",
+  "Your baby is floating peacefully today 🌊",
+  "A quiet day of development 💛",
+];
+
 /**
  * Pick closest fruit for current week
  */
@@ -74,6 +84,11 @@ function getFruitForWeek(week: number) {
   return FRUIT_BY_WEEK[selectedWeek];
 }
 
+function possessive(name: string) {
+  if (name.toLowerCase().endsWith("s")) return `${name}'`;
+  return `${name}'s`;
+}
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 
@@ -81,6 +96,10 @@ export async function GET(req: Request) {
   const dueDateParam = searchParams.get("due_date");
   const width = Number(searchParams.get("width") ?? 1179);
   const height = Number(searchParams.get("height") ?? 2556);
+  const babyName = searchParams.get("baby") ?? "Your baby";
+  const from = searchParams.get("from") ?? "";
+
+  const babyLabel = possessive(babyName);
 
   if (!dueDateParam) {
     return new Response("Missing due_date parameter", { status: 400 });
@@ -97,9 +116,11 @@ export async function GET(req: Request) {
   );
 
   const week = Math.floor(elapsedDays / 7);
+  const clampedWeek = Math.min(Math.max(week, 0), 40);
   const dayInWeek = elapsedDays % 7;
 
-  const fruit = getFruitForWeek(week);
+  const message = DAILY_MESSAGES[dayInWeek % DAILY_MESSAGES.length];
+  const fruit = getFruitForWeek(clampedWeek);
 
   return new ImageResponse(
     (
@@ -115,8 +136,16 @@ export async function GET(req: Request) {
         }}
       >
         {/* Top */}
-        <div style={{ fontSize: 48, opacity: 0.7, display: "flex", alignItems: "center", gap: 16 }}>
-          {`Week ${week} · Day ${dayInWeek + 1}`}
+        <div
+          style={{
+            fontSize: 48,
+            opacity: 0.7,
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+          }}
+        >
+          <div>{`Week ${clampedWeek} · Day ${dayInWeek + 1}`}</div>
         </div>
 
         {/* Center */}
@@ -136,7 +165,11 @@ export async function GET(req: Request) {
             style={{ marginBottom: 40 }}
           />
 
-          <div style={{ fontSize: 64, fontWeight: 600 }}>
+          <div style={{ fontSize: 56, fontWeight: 600, textAlign: "center" }}>
+            {`${babyLabel} size is about a`}
+          </div>
+
+          <div style={{ fontSize: 72, fontWeight: 700, marginTop: 10 }}>
             {fruit.name}
           </div>
         </div>
@@ -144,12 +177,21 @@ export async function GET(req: Request) {
         {/* Bottom */}
         <div
           style={{
-            fontSize: 42,
+            fontSize: 40,
             textAlign: "center",
             opacity: 0.8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          Your baby is about this size today 💛
+          <div>{message}</div>
+
+          {from && (
+            <div style={{ marginTop: 20, fontSize: 32, opacity: 0.6 }}>
+              {`— ${from}`}
+            </div>
+          )}
         </div>
       </div>
     ),
