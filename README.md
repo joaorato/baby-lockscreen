@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Baby Lock Screen Generator
 
-## Getting Started
+A personal web app that generates daily lock screen images for your iPhone, showing the current size of your baby during pregnancy. The app visualizes the baby as a fruit or vegetable corresponding to the current week of pregnancy, along with a motivating or cute daily message for the parents.
 
-First, run the development server:
+## Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The goal of this project is to create a fun, informative, and visually appealing way to track pregnancy progress on your lock screen. Every day, the app updates the image to reflect your baby's growth and provides encouragement for the parents.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Inspiration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project was inspired by an upcoming shift in my personal life — the joy and anticipation of becoming a parent. It builds on ideas from [thelifecalendar.com](https://thelifecalendar.com), combining visual life tracking with daily motivation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- Generates daily lock screen images with fruit/vegetable representation of the baby's size.
+- Shows the current week and day of pregnancy.
+- Provides daily messages that correspond to the stage of pregnancy.
+- Easily integrates with iPhone Shortcuts to automate updating the lock screen.
+- Customizable with baby name, sender name, and iPhone model for proper sizing.
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Open the app and set the parameters: baby name, due date, sender, and iPhone model.
+2. Copy the generated URL.
+3. Open the <strong>Shortcuts</strong> app on your iPhone.
+4. Create a personal automation to run every day at your desired time.
+5. Use the "Get Contents of URL" action with the copied URL and then "Set Wallpaper" action for your lock screen.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Acknowledgements
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Inspired by [thelifecalendar.com](https://thelifecalendar.com) and tailored for a personal pregnancy journey.
