@@ -54,7 +54,7 @@ const IPHONE_MODELS: Record<string, Record<string, { width: number; height: numb
 };
 
 export default function Home() {
-  const [baby, setBaby] = useState("Your baby");
+  const [baby, setBaby] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [from, setFrom] = useState("");
   const [series, setSeries] = useState<keyof typeof IPHONE_MODELS>("iPhone 15");
@@ -115,7 +115,7 @@ export default function Home() {
                 value={baby}
                 onChange={(e) => setBaby(e.target.value)}
                 className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white placeholder-zinc-400 backdrop-blur focus:outline-none focus:ring-2 focus:ring-pink-500/40"
-                placeholder="Ratinho"
+                placeholder="Your baby"
               />
             </div>
 
