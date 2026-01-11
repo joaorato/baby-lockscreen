@@ -234,7 +234,9 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-4">How to use</h2>
         <ol className="list-decimal list-inside space-y-2 text-sm">
           <li>Copy the generated URL using the button above.</li>
-          <li>Open the <strong>Shortcuts</strong> app on your iPhone.</li>
+          <li>
+            Open the <a href="shortcuts://" className="underline hover:text-white">Shortcuts</a> app on your iPhone.
+          </li>
           <li>Go to <strong>Automation → New Automation</strong>.</li>
           <li>Select <strong>Time of Day</strong>, set your desired time (e.g., 6:00 AM).</li>
           <li>Repeat <strong>Daily</strong> → <strong>Run Immediately</strong>, and tap <strong>Next</strong>.</li>
