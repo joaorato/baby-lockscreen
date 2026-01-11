@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/next"
 
 const IPHONE_MODELS: Record<string, Record<string, { width: number; height: number }>> = {
   "iPhone Air": {
@@ -75,12 +76,28 @@ export default function Home() {
       : relativeUrl;
 
   const [copied, setCopied] = useState(false);
+  const [showUrlBox, setShowUrlBox] = useState(true);
 
   async function copyUrl() {
     await navigator.clipboard.writeText(fullUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.body.scrollHeight;
+
+      // Hide the box if we're within 200px of the bottom
+      setShowUrlBox(scrollPosition < documentHeight - 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // initial check
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-10 text-zinc-100">
@@ -192,23 +209,44 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-1/2 z-50 w-11/12 max-w-3xl -translate-x-1/2">
-        <div className="w-full">
-          <label className="block text-sm font-medium">Generated URL</label>
-          <div className="mt-2 relative group">
-            <code className="block w-full break-all rounded-xl border border-white/10 bg-black/40 p-4 pr-12 text-sm text-zinc-100 backdrop-blur">
-              {fullUrl}
-            </code>
-            <button
-              onClick={copyUrl}
-              className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white/20"
-              aria-label="Copy URL"
-            >
-              {copied ? "✓" : "⧉"}
-            </button>
+      {showUrlBox && (
+        <div className="fixed bottom-6 left-1/2 z-50 w-11/12 max-w-3xl -translate-x-1/2">
+          <div className="w-full">
+            <label className="block text-sm font-medium">Generated URL</label>
+            <div className="mt-2 relative group">
+              <code className="block w-full break-all rounded-xl border border-white/10 bg-black/40 p-4 pr-12 text-sm text-zinc-100 backdrop-blur">
+                {fullUrl}
+              </code>
+              <button
+                onClick={copyUrl}
+                className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white/20"
+                aria-label="Copy URL"
+              >
+                {copied ? "✓" : "⧉"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Help Section */}
+      <section className="mt-12 max-w-3xl mx-auto rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(255,255,255,0.05)] backdrop-blur-2xl text-zinc-200">
+        <h2 className="text-2xl font-semibold mb-4">How to use</h2>
+        <ol className="list-decimal list-inside space-y-2 text-sm">
+          <li>Copy the generated URL using the button above.</li>
+          <li>Open the <strong>Shortcuts</strong> app on your iPhone.</li>
+          <li>Go to <strong>Automation → New Automation</strong>.</li>
+          <li>Select <strong>Time of Day</strong>, set your desired time (e.g., 6:00 AM).</li>
+          <li>Repeat <strong>Daily</strong> → <strong>Run Immediately</strong>, and tap <strong>Next</strong>.</li>
+          <li><strong>Create New Shortcut</strong>.</li>
+          <li>Add the <strong>Get Contents of URL</strong> action and paste the copied URL.</li>
+          <li>Add the <strong>Set Wallpaper Photo</strong> action to update your <strong>Lock Screen</strong>.</li>
+          <li>
+            <strong>Important:</strong> In <strong>Set Wallpaper Photo</strong>, tap the arrow (&gt;) to show options → disable both <strong>Crop to Subject</strong> and <strong>Show Preview</strong>.
+          </li>
+          <li>Save the automation. Your Lock Screen will now update daily with the baby image.</li>
+        </ol>
+      </section>
     </div>
   );
 }
