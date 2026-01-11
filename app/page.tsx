@@ -56,8 +56,8 @@ export default function Home() {
   const [baby, setBaby] = useState("Your baby");
   const [dueDate, setDueDate] = useState("");
   const [from, setFrom] = useState("");
-  const [series, setSeries] = useState<keyof typeof IPHONE_MODELS>("iPhone 17");
-  const [model, setModel] = useState<keyof (typeof IPHONE_MODELS)["iPhone 17"]>("iPhone 17 Pro");
+  const [series, setSeries] = useState<keyof typeof IPHONE_MODELS>("iPhone 15");
+  const [model, setModel] = useState<keyof (typeof IPHONE_MODELS)["iPhone 15"]>("iPhone 15 Pro");
 
   const { width, height } = IPHONE_MODELS[series][model];
 
@@ -108,7 +108,7 @@ export default function Home() {
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="mt-1 w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white placeholder-zinc-400 backdrop-blur focus:outline-none focus:ring-2 focus:ring-pink-500/40"
+                className="mt-1 w-full box-border appearance-none rounded-xl border border-white/10 bg-white/5 p-3 text-white placeholder-zinc-400 backdrop-blur focus:outline-none focus:ring-2 focus:ring-pink-500/40"
               />
             </div>
 
@@ -201,7 +201,7 @@ export default function Home() {
             </code>
             <button
               onClick={copyUrl}
-              className="absolute right-3 top-3 hidden h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white/20 group-hover:flex"
+              className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white/20"
               aria-label="Copy URL"
             >
               {copied ? "✓" : "⧉"}
