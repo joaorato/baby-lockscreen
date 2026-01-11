@@ -171,6 +171,10 @@ export default function Home() {
               </p>
             </div>
           </div>
+          <footer className="mt-6 text-sm text-zinc-400 space-x-2">
+            <span>made by <a href="https://github.com/joaorato" className="underline hover:text-white">joaorato</a></span>
+            <span>· inspired by <a href="https://thelifecalendar.com" className="underline hover:text-white">thelifecalendar.com</a></span>
+          </footer>
         </div>
         {/* Preview panel */}
         <div className="flex-1 flex justify-center items-start mt-6 lg:mt-0">
