@@ -166,12 +166,13 @@ export async function GET(req: Request) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
           background: "radial-gradient(circle at center, #FFEBE9 0%, #edc7c9 50%, #d48970 90%)",
           fontFamily: "system-ui, -apple-system",
           padding: 60,
           color: "#333",
+          paddingTop: height * 0.38, // increase this to move everything down
         }}
       >
         {/* Center Fruit + Text */}
