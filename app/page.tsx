@@ -59,6 +59,7 @@ export default function Home() {
   const [from, setFrom] = useState("");
   const [series, setSeries] = useState<keyof typeof IPHONE_MODELS>("iPhone 15");
   const [model, setModel] = useState<keyof (typeof IPHONE_MODELS)["iPhone 15"]>("iPhone 15 Pro");
+  const [previewLoading, setPreviewLoading] = useState(false);
 
   const { width, height } = IPHONE_MODELS[series][model];
 
@@ -98,6 +99,12 @@ export default function Home() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (dueDate) {
+      setPreviewLoading(true);
+    }
+  }, [relativeUrl, dueDate]);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-10 text-zinc-100">
@@ -196,11 +203,22 @@ export default function Home() {
         {/* Preview panel */}
         <div className="flex-1 flex justify-center items-start mt-6 lg:mt-0">
           {dueDate ? (
-            <img
-              src={relativeUrl}
-              alt="Preview"
-              className="w-full max-w-sm rounded-3xl border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.35)]"
-            />
+            <div className="relative">
+              {previewLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black/40 backdrop-blur">
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  </div>
+                </div>
+              )}
+              <img
+                src={relativeUrl}
+                alt="Preview"
+                onLoad={() => setPreviewLoading(false)}
+                onError={() => setPreviewLoading(false)}
+                className="w-full max-w-sm rounded-3xl border border-white/10 shadow-[0_0_60px_rgba(236,72,153,0.35)]"
+              />
+            </div>
           ) : (
             <p className="text-sm text-zinc-500">
               Set a due date to see the preview.
