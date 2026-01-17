@@ -52,41 +52,95 @@ const FRUIT_BY_WEEK: Record<number, { name: string; imageUrl: string }> = {
   40: { name: "Watermelon", imageUrl: "https://res.cloudinary.com/ds5mpgwi1/image/upload/v1768078407/watermelon_wlzehm.png" },
 };
 
-const FIRST_TRIMESTER_MESSAGES = [
-  "Your baby is growing tiny fingers and toes 👶",
-  "Your baby is practicing little movements 💫",
-  "A big development day today 🧠",
-  "Mom is amazing! Keep it up! 💖",
-  "Your baby’s heart is beating strong 💓",
-  "Tiny arms and legs are starting to form 🦵🖐️",
-  "Mom is amazing — your body is creating life! 💛",
-  "Your baby is practicing little movements 💫",
-  "Cells are multiplying at lightning speed ⚡",
-];
-
-const SECOND_TRIMESTER_MESSAGES = [
-  "Your baby is getting stronger 💪",
-  "So much growth happening right now 🌱",
-  "Your baby is floating peacefully today 🌊",
-  "Mom is amazing! You're doing great! 🌟",
-  "Your baby is starting to hear sounds 🎵",
-  "Little kicks are happening — can you feel them? 🦵",
-  "Your baby’s facial features are becoming more distinct 🙂",
-  "Mom is amazing — nurturing a growing little human! 🌱",
-  "Tiny fingers and toes are developing 👶",
-];
-
-const THIRD_TRIMESTER_MESSAGES = [
-  "Almost there! Your baby is growing rapidly 🚀",
-  "Getting ready for the big day! 🎉",
-  "Your baby is developing lungs and brain 🧠",
-  "Mom is amazing! Keep shining! ✨",
-  "Your baby’s lungs are getting stronger 🫁",
-  "The baby is practicing breathing movements 🌬️",
-  "Mom is amazing — almost time to meet your little one! 💛",
-  "Your baby is dreaming in utero 🌙",
-  "Your baby is getting ready for the big world 🌎",
-];
+/** 
+* Weekly development messages
+ */
+const WEEKLY_MESSAGES: Record<number, string[]> = {
+  4: [
+    "Your baby is now implanted and beginning to form the placenta 🌱",
+    "The foundations of the brain and spinal cord are forming 🧠",
+    "Your baby is smaller than a grain of rice but growing fast",
+    "Hormones are surging — mom is doing something incredible 💛",
+    "The amniotic sac is forming to protect your baby",
+  ],
+  5: [
+    "Your baby’s heart is beginning to form ❤️",
+    "Tiny structures that will become arms and legs are appearing 🦵",
+    "Major organs are starting their development",
+    "Your baby has a primitive circulatory system",
+    "The brain is dividing into important sections 🧠",
+  ],
+  6: [
+    "Your baby’s heart may already be beating 💓",
+    "Facial features are beginning to take shape 🙂",
+    "The neural tube is closing — crucial brain development 🧠",
+    "Tiny buds will soon become hands and feet ✋",
+    "Your baby is growing rapidly day by day ⚡",
+  ],
+  7: [
+    "Your baby is growing a little tail — it will disappear soon!",
+    "Hands and feet are forming tiny paddles ✋",
+    "The brain is growing rapidly ⚡",
+    "Your baby’s face is becoming more recognizable",
+    "Early muscle development has begun 💪",
+  ],
+  8: [
+    "All major organs are now present, though still developing",
+    "Tiny fingers are starting to separate 👶",
+    "Your baby is starting to move, even if you can’t feel it yet",
+    "The heart is beating steadily and growing stronger 💓",
+    "Mom is amazing — this is a huge milestone week 💖",
+  ],
+  12: [
+    "Your baby has developed reflexes and may respond to touch",
+    "Facial features are now more defined 🙂",
+    "Your baby can open and close their mouth",
+    "The digestive system is continuing to mature",
+    "Mom is amazing — the first trimester is almost complete 💛",
+  ],
+  16: [
+    "Your baby can make facial expressions now 😮",
+    "Bones are becoming harder and stronger 🦴",
+    "Your baby is practicing little movements 💫",
+    "The nervous system is becoming more coordinated",
+    "Tiny nails are starting to grow 💅",
+  ],
+  20: [
+    "You may feel your baby move — hello kicks! 🦵",
+    "Your baby can hear sounds from the outside world 🎵",
+    "A big milestone week — halfway there! 🎉",
+    "Your baby is developing a regular sleep cycle 😴",
+    "Hair may begin growing on the scalp",
+  ],
+  24: [
+    "Your baby’s lungs are developing air sacs 🫁",
+    "The brain is growing quickly and becoming more complex 🧠",
+    "Your baby is responding to voices 💬",
+    "The skin is still thin and translucent",
+    "Your baby is gaining weight steadily",
+  ],
+  28: [
+    "Your baby can open and close their eyes 👀",
+    "The brain is developing folds and grooves 🧠",
+    "Your baby is storing fat to regulate temperature",
+    "Almost in the final stretch — mom is incredible ✨",
+    "Your baby can recognize familiar voices 💛",
+  ],
+  32: [
+    "Your baby is practicing breathing movements 🌬️",
+    "Fat is accumulating to help regulate body temperature",
+    "Your baby is settling into a head-down position",
+    "Bones are fully developed but still soft",
+    "The immune system is continuing to mature",
+  ],
+  36: [
+    "Your baby is considered full term very soon 🎉",
+    "Organs are almost fully mature",
+    "Your baby is gaining weight rapidly now",
+    "Your body is preparing for birth — you’re doing amazing 💛",
+    "Your baby is running out of room and movements may feel stronger",
+  ],
+};
 
 /**
  * Pick closest fruit for current week
@@ -111,18 +165,15 @@ function possessive(name: string) {
 }
 
 function getMessageForWeek(week: number, elapsedDays: number) {
-  if (week >= 0 && week <= 13) {
-    const idx = elapsedDays % FIRST_TRIMESTER_MESSAGES.length;
-    return FIRST_TRIMESTER_MESSAGES[idx];
-  } else if (week >= 14 && week <= 27) {
-    const idx = elapsedDays % SECOND_TRIMESTER_MESSAGES.length;
-    return SECOND_TRIMESTER_MESSAGES[idx];
-  } else if (week >= 28 && week <= 40) {
-    const idx = elapsedDays % THIRD_TRIMESTER_MESSAGES.length;
-    return THIRD_TRIMESTER_MESSAGES[idx];
-  } else {
-    return "Your baby is growing beautifully! 🌸";
+  const messages =
+    WEEKLY_MESSAGES[week] ??
+    WEEKLY_MESSAGES[Math.max(...Object.keys(WEEKLY_MESSAGES).map(Number).filter(w => w <= week))];
+
+  if (!messages || messages.length === 0) {
+    return "Your baby is growing beautifully today 🌸";
   }
+
+  return messages[elapsedDays % messages.length];
 }
 
 export async function GET(req: Request) {
