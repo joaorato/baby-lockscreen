@@ -104,13 +104,16 @@ const WEEKLY_MESSAGES: Record<number, string[]> = {
     "Your baby is practicing little movements 💫",
     "The nervous system is becoming more coordinated",
     "Tiny nails are starting to grow 💅",
+    "Mom is doing an incredible job — keep nourishing that body! 🥗",
   ],
   20: [
     "You may feel your baby move — hello kicks! 🦵",
     "Your baby can hear sounds from the outside world 🎵",
-    "A big milestone week — halfway there! 🎉",
+    "A big milestone — halfway there! 🎉",
     "Your baby is developing a regular sleep cycle 😴",
     "Hair may begin growing on the scalp",
+    "Remember mom, drink water! 💧",
+    "Your baby is growing rapidly — about 10x in size since week 12!",
   ],
   24: [
     "Your baby’s lungs are developing air sacs 🫁",
@@ -118,6 +121,8 @@ const WEEKLY_MESSAGES: Record<number, string[]> = {
     "Your baby is responding to voices 💬",
     "The skin is still thin and translucent",
     "Your baby is gaining weight steadily",
+    "Mom is doing an amazing job — keep taking care of yourself! 💛",
+    "Water is your best friend now — stay hydrated! 💧",
   ],
   28: [
     "Your baby can open and close their eyes 👀",
@@ -125,6 +130,7 @@ const WEEKLY_MESSAGES: Record<number, string[]> = {
     "Your baby is storing fat to regulate temperature",
     "Almost in the final stretch — mom is incredible ✨",
     "Your baby can recognize familiar voices 💛",
+    "Drink water and rest when you can — you’re doing something amazing! 💧",
   ],
   32: [
     "Your baby is practicing breathing movements 🌬️",
@@ -132,6 +138,7 @@ const WEEKLY_MESSAGES: Record<number, string[]> = {
     "Your baby is settling into a head-down position",
     "Bones are fully developed but still soft",
     "The immune system is continuing to mature",
+    "Mom, you’re doing an incredible job — the finish line is in sight! 💛",
   ],
   36: [
     "Your baby is considered full term very soon 🎉",
