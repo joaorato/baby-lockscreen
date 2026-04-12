@@ -147,6 +147,50 @@ const WEEKLY_MESSAGES: Record<number, string[]> = {
     "Your body is preparing for birth — you’re doing amazing 💛",
     "Your baby is running out of room and movements may feel stronger",
   ],
+  37: [
+    "Your baby is now early term — almost ready to meet you! 🎉",
+    "Lungs are nearly mature and ready for the first breath 🫁",
+    "Your baby is practicing sucking and swallowing",
+    "The finishing touches are being put on that little brain 🧠",
+    "Pack your hospital bag if you haven’t already! 🧳",
+    "Your baby could arrive any day now — how exciting! ✨",
+  ],
+  38: [
+    "Your baby is officially full term! 🥳",
+    "All organs are ready to function on their own",
+    "Your baby has a firm grasp — ready to hold your finger 🤝",
+    "The last bits of fat are being added for those adorable chubby cheeks",
+    "You’re so close — you’ve done an incredible job, mom 💛",
+    "Pack your hospital bag if you haven’t already! 🧳",
+    "Your baby is just waiting for the perfect moment to arrive ✨",
+  ],
+  39: [
+    "Any day now — your baby is ready! 🎉",
+    "Your baby’s chest is stocking up on surfactant for that first big breath",
+    "New neural connections are forming every single second 🧠",
+    "You’ve been incredible throughout this journey 💛",
+    "Soon you’ll hold your baby for the first time — imagine that moment 🥹",
+    "Rest up — you’re about to begin the greatest adventure of your life ✨",
+    "Pack your hospital bag if you haven’t already! 🧳",
+  ],
+  40: [
+    "This is it — your due date week! 🎉🎉🎉",
+    "Your baby is fully developed and ready to say hello 👋",
+    "Trust your body — it knows exactly what to do 💪",
+    "The wait is almost over — soon you’ll be holding your little one 🥹",
+    "You’ve grown a whole human being — that’s beyond amazing 💛",
+    "Take deep breaths — you’re about to meet the love of your life ✨",
+    "Every moment now brings you closer to your baby 💕",
+  ],
+  41: [
+    "Your baby is taking their sweet time — patience, you’re doing great 💛",
+    "Many healthy babies arrive after 40 weeks — no rush!",
+    "Your baby is still growing and getting even cuter in there 😊",
+    "Extra time means extra snuggles to look forward to ✨",
+    "Stay in touch with your doctor — everything is going to be wonderful 🩺",
+    "Your baby will come when they’re ready — hang in there! 💪",
+    "Almost there — the best is yet to come 🌟",
+  ],
 };
 
 /**
@@ -210,7 +254,7 @@ export async function GET(req: Request) {
   );
 
   const week = Math.floor(elapsedDays / 7);
-  const clampedWeek = Math.min(Math.max(week, 0), 40);
+  const clampedWeek = Math.min(Math.max(week, 0), 42);
   const dayInWeek = elapsedDays % 7;
 
   const message = getMessageForWeek(clampedWeek, elapsedDays);
