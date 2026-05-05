@@ -327,7 +327,7 @@ export async function GET(req: Request) {
               textShadow: "1px 1px 4px rgba(0,0,0,0.2)",
             }}
           >
-            {`Week ${clampedWeek} · Day ${dayInWeek + 1}`}
+            {`Week ${clampedWeek} · Day ${dayInWeek}`}
           </div>
         </div>
 
